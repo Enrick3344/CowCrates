@@ -77,6 +77,7 @@ class Main extends PluginBase implements Listener{
 	public function onInteract(PlayerInteractEvent $event){
 		$player = $event->getPlayer();
 		$name = $player->getName();
+		$crate = $event->getBlock();
 		$block = $this->config->get["Crates-Block"];
 		$key = $this->config->get["Key-Item-Id"];
 		$commonm = $this->config->get["Common"]["Money"];
@@ -93,9 +94,9 @@ class Main extends PluginBase implements Listener{
 			 $event->setCancelled(); 
 			 $player->addTitle(TextFormat::AQUA . "Opening a Crate...");
 			 $level = $player->getLevel();
-        		$x = $block->getX();
-        		$y = $block->getY();
-        		$z = $block->getZ();
+        		$x = $crate->getX();
+        		$y = $crate->getY();
+        		$z = $crate->getZ();
         		$r = 2000;
         		$g = 2000;
         		$b = 2000;
