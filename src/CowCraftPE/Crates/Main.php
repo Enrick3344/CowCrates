@@ -8,6 +8,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerInteractEvent;
+use pocketmine\level\sound\PopSound;
 use pocketmine\utils\Config;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
@@ -35,6 +36,7 @@ class Main extends PluginBase implements Listener{
 	  $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
 		  'Crates-Block' => 54,
       'Key-Item-Id' => 370,
+      'Key-Custom-Name' => "§l§d>>§r§7Crate Key§l§d<<",
       'Broadcast' => true,
       'BroadcastMessage' => "&6{player}&b Used a crate and got awesome rewards!",
       'Common' => array(
@@ -82,6 +84,7 @@ class Main extends PluginBase implements Listener{
 		$crate = $event->getBlock();
 		$block = $this->config->get["Crates-Block"];
 		$key = $this->config->get["Key-Item-Id"];
+		$keyname = $this->config->get["Key-Custom-Name"];
 		$commonm = $this->config->get["Common"]["Money"];
 		$commoni = $this->config->get["Common"]["Items"];
 		$commonc = $this->config->get["Common"]["Commands"];
@@ -92,7 +95,7 @@ class Main extends PluginBase implements Listener{
 		$legendaryi = $this->config->get["Legendary"]["Items"];
 		$legendaryc = $this->config->get["Legendary"]["Commands"];
 		if($event->getBlock()->getId($block)){
-		   if($event->getItem()->getId($key)){
+		   if($event->getItem()->getId($key) && $event->getItem()->getName() === $keyname){
 			 $event->setCancelled(); 
 			 $player->addTitle(TextFormat::AQUA . "Opening a Crate...");
 			 $level = $player->getLevel();
@@ -112,8 +115,12 @@ class Main extends PluginBase implements Listener{
               			$particle->setComponents($x, $y, $z);
               			$level->addParticle($particle);
 		          }
-			$i = $player->getInventory()->getItem(Item::get($key));
-			$player->getInventory()->removeItem($i);
+			 foreach($player->getInventory->getContents() as $item) {
+  				if($item->getCustomName() === $keyname) {
+					$item=>setCount(1);
+   					$player->getInventory()->removeItem($item);
+				}
+			 }
         		$prize = rand(1,3);
         		switch($prize){
 				case 1: //Common
@@ -122,7 +129,8 @@ class Main extends PluginBase implements Listener{
 				$this->getServer()->dispatchCommand(new ConsoleCommandSender(), str_replace("{player}", $name, $commonc));
 				if($this->config->get["Broadcast"] === "true"){
 					$message = $this->config->get["Broadcast-Message"];
-					$this->getServer()->broadcastMessage($this->translateColors(str_replace("{player}", $name, $message)));		
+					$this->getServer()->broadcastMessage($this->translateColors(str_replace("{player}", $name, $message)));
+					 $level->addSound(new PopSound(new Vector3($x, $y + 1, $z)));
 				}
 				$player->sendMessage("§l§7[§6CowCraftPE§7]§r§6 You Opened A Common Crate! Look In Your Inventory For Your Rewards");
 				break;
@@ -135,6 +143,7 @@ class Main extends PluginBase implements Listener{
 					$this->getServer()->broadcastMessage($this->translateColors(str_replace("{player}", $name, $message)));		
 				}
 				$player->sendMessage("§l§7[§6CowCraftPE§7]§r§a You Opened A Rare Crate! Look In Your Inventory For Your Rewards");
+					 $level->addSound(new PopSound(new Vector3($x, $y + 1, $z)));
 				break;
 				case 2: //Legendary
 				EconomyAPI::getInstance()->addMoney($player, "$legendarym");
@@ -145,6 +154,7 @@ class Main extends PluginBase implements Listener{
 					$this->getServer()->broadcastMessage($this->translateColors(str_replace("{player}", $name, $message)));		
 				}
 				$player->sendMessage("§l§7[§6CowCraftPE§7]§r§b You Opened A Legendary Crate! Look In Your Inventory For Your Rewards");
+					 $level->addSound(new PopSound(new Vector3($x, $y + 1, $z)));
 				break;
 			}
 		   }
