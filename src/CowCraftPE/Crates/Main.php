@@ -112,7 +112,7 @@ class Main extends PluginBase implements Listener{
               			$particle->setComponents($x, $y, $z);
               			$level->addParticle($particle);
 		          }
-			$i = Item::get($this->config->get["Key-Item-Id"]);
+			$i = $player->getInventory()->getItem()->getId($key);
 			$player->getInventory()->removeItem($i);
         		$prize = rand(1,3);
         		switch($prize){
