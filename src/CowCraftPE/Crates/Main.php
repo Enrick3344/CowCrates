@@ -113,7 +113,7 @@ class Main extends PluginBase implements Listener{
               			$particle->setComponents($x, $y, $z);
               			$level->addParticle($particle);
 		          }
-			 foreach($player->getInventory->getContents() as $item) {
+			 foreach($player->getInventory()->getContents() as $item) {
   				if($item->getId() === $key) {
 					$item->setCount(1);
    					$player->getInventory()->removeItem($item);
