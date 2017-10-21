@@ -44,7 +44,7 @@ class Main extends PluginBase implements Listener{
         'Money' => 500,
         'Commands' => [])
     ));
-	  $this->config->save()
+	  $this->config->save();
   }
 	public function loadCommand(){
 		$commands = [
