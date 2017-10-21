@@ -95,7 +95,7 @@ class Main extends PluginBase implements Listener{
 		$legendaryi = $this->config->get["Legendary"]["Items"];
 		$legendaryc = $this->config->get["Legendary"]["Commands"];
 		if($event->getBlock()->getId($block)){
-		   if($event->getItem()->getId($key) && $event->getItem()->getName() === $keyname){
+		   if($event->getItem()->getId($key) && $event->getItem()->getName() === "$keyname"){
 			 $event->setCancelled(); 
 			 $player->addTitle(TextFormat::AQUA . "Opening a Crate...");
 			 $level = $player->getLevel();
