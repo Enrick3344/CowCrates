@@ -36,7 +36,7 @@ class Main extends PluginBase implements Listener{
 	  $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
 		  'Crates-Block' => 54,
       'Key-Item-Id' => 370,
-      'Key-Custom-Name' => "§l§d>>§r§7Crate Key§l§d<<",
+      'Key-Custom-Name' => '§l§d>>§r§7Crate Key§l§d<<',
       'Broadcast' => true,
       'BroadcastMessage' => "&6{player}&b Used a crate and got awesome rewards!",
       'Common' => array(
