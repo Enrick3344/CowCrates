@@ -117,7 +117,7 @@ class Main extends PluginBase implements Listener{
 		          }
 			 foreach($player->getInventory->getContents() as $item) {
   				if($item->getCustomName() === $keyname) {
-					$item=>setCount(1);
+					$item->setCount(1);
    					$player->getInventory()->removeItem($item);
 				}
 			 }
