@@ -1,0 +1,2 @@
+# CowCrates
+[CowCraftPE] Private Plugin
