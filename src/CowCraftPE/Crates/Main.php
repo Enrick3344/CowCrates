@@ -2,6 +2,8 @@
 
 namespace CowCraftPE\Crates;
 
+use pocketmine\item\Item;
+use pocketmine\block\Block;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
