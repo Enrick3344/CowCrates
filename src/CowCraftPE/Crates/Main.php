@@ -76,5 +76,5 @@ class Main extends PluginBase implements Listener{
 		$msg = str_replace("&l",TextFormat::BOLD,$msg);
 		$msg = str_replace("&r",TextFormat::RESET,$msg);
 		return $msg;
-	
+	}
 }
