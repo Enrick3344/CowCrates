@@ -36,7 +36,6 @@ class Main extends PluginBase implements Listener{
 	  $this->config = new Config($this->getDataFolder() . "config.yml", Config::YAML, array(
 		  'Crates-Block' => 54,
       'Key-Item-Id' => 370,
-      'Key-Custom-Name' => '§l§d>>§r§7Crate Key§l§d<<',
       'Broadcast' => true,
       'BroadcastMessage' => "&6{player}&b Used a crate and got awesome rewards!",
       'Common' => array(
@@ -84,7 +83,6 @@ class Main extends PluginBase implements Listener{
 		$crate = $event->getBlock();
 		$block = $this->config->get["Crates-Block"];
 		$key = $this->config->get["Key-Item-Id"];
-		$keyname = $this->config->get["Key-Custom-Name"];
 		$commonm = $this->config->get["Common"]["Money"];
 		$commoni = $this->config->get["Common"]["Items"];
 		$commonc = $this->config->get["Common"]["Commands"];
@@ -95,7 +93,7 @@ class Main extends PluginBase implements Listener{
 		$legendaryi = $this->config->get["Legendary"]["Items"];
 		$legendaryc = $this->config->get["Legendary"]["Commands"];
 		if($event->getBlock()->getId($block)){
-		   if($event->getItem()->getId($key) && $event->getItem()->getName() === "$keyname"){
+		   if($event->getItem()->getId($key)){
 			 $event->setCancelled(); 
 			 $player->addTitle(TextFormat::AQUA . "Opening a Crate...");
 			 $level = $player->getLevel();
@@ -116,7 +114,7 @@ class Main extends PluginBase implements Listener{
               			$level->addParticle($particle);
 		          }
 			 foreach($player->getInventory->getContents() as $item) {
-  				if($item->getCustomName() === $keyname) {
+  				if($item->getId() === $key) {
 					$item->setCount(1);
    					$player->getInventory()->removeItem($item);
 				}
