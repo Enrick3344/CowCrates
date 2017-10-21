@@ -16,7 +16,6 @@ class Main extends PluginBase implements Listener{
   public function onEnable(){
     @mkdir($this->getDataFolder());
 		$this->getServer()->getPluginManager()->registerEvents($this,$this);
-		$this->loadCommand();
 		$this->loadConfig();
 		$this->getLogger()->notice("CowCraftNetwork Crates Enabled!");;
 	}
@@ -46,14 +45,6 @@ class Main extends PluginBase implements Listener{
     ));
 	  $this->config->save();
   }
-	public function loadCommand(){
-		$commands = [
-		  "key" => new KeyCommand($this)
-		];
-		foreach($commands as $name => $class){
-			$this->getServer()->getCommandMap()->register($name, $class);
-		}
-	}
 	
 	public function translateColors($string){
 		$msg = str_replace("&1",TextFormat::DARK_BLUE,$string);
