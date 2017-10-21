@@ -115,8 +115,7 @@ class Main extends PluginBase implements Listener{
 		          }
 			 foreach($player->getInventory()->getContents() as $item) {
   				if($item->getId() === $key) {
-					$item->setCount(1);
-   					$player->getInventory()->removeItem($item);
+   					$player->getInventory()->remove($item);
 				}
 			 }
         		$prize = rand(1,3);
